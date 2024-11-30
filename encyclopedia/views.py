@@ -14,4 +14,7 @@ def title(request, name):
         "title": util.title_change(name),
         "name": util.get_entry(name), 
     })
-
+def search(request, name):
+    return render(request, "encyclopedia/search_page.html", {
+        "queries": util.search_entries(name),
+    })

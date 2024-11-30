@@ -43,3 +43,15 @@ def title_change(title):
         if entry.lower() == title.lower():
             return entry
 
+def search_entries(query):
+    # output=[]
+    # for i in range(len(query)):
+    #     for j in range(i+1, len(query)+1):
+    #         output.append(query[i:j])
+
+    # for k in output:
+    #     for filename in list_entries():
+    #         if k in filename:
+    #           return "test"  
+   return "test"
+
