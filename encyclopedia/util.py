@@ -44,3 +44,46 @@ def title_change(title):
     for entry in list_entries():
         if entry.lower() == title.lower():
             return entry
+
+def search_entry(query):
+    output=[]
+    broke= "false"
+    # for i in range(len(query)):
+    #     for j in range(i+1, len(query)+1):
+    #         output.append(query[i:j])
+    list_search=[]
+    for k in range(len(query)):
+        for l in range(k+1, len(query)+1):
+            broke = "false"
+            for entry in list_entries():
+                if query == entry:
+                    output.append(entry)
+                    broke = "true"
+                    break
+                else:
+                    for i in range(len(entry)):
+                        broke = "false"
+                        for j in range(i+1, len(entry)+1):
+                            if entry[i:j] == query [k:l]:
+                                output.append(entry)
+                                broke = "true"
+            if broke == "true":
+                break
+               
+                    
+
+            
+    # for entry in list_entries():
+    #     for i in range(len(entry)):
+    #         for j in range(i+1, len(entry)+1):
+    #             list_search.append(entry[i:j])
+    #             for k in range(len(query)):
+    #                 for l in range(k+1, len(query)+1):
+    #                     if query[k:l] == entry[i:j]:
+    #                         output.append(entry)
+    #                         break
+    # for k in output:
+    #     for filename in list_entries():
+    #         if k in filename:
+    #           list_search.append()
+    return output
