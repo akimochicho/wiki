@@ -21,7 +21,12 @@ def search(request):
         print("passed through find method")
         store = util.search_entry(query, 0)
         substring = util.substring_check(query)
-        if len(store)!= 1 or substring == "true": 
+        if len(store) > 1 or substring == "true": 
+            return render(request, "encyclopedia/search_page.html", {
+                "queries": util.search_entry(query, 0),
+                "title": query
+            }) 
+        elif len(store) == 0:
             return render(request, "encyclopedia/search_page.html", {
                 "queries": util.search_entry(query, 0),
                 "title": query

@@ -45,107 +45,32 @@ def title_change(title):
         if entry.lower() == title.lower():
             return entry
 
-
-# def search_entry(query):
-    output=[]
-    broke= "false"
-    prefix = "Similar Pages: "
-    for k in range(len(query)):
-        for l in range(k+1, len(query)+1):
-            broke = "false"
-            for entry in list_entries():
-                if query.lower() == entry.lower():
-                    if entry in output:
-                        broke = "true"
-                        prefix=""
-                        break
-                    else:
-                        output.append(entry)
-                        broke = "true"
-                        prefix=""
-                        break
-                else:
-                    broke = "false"
-                    for i in range(len(entry)):
-                        if broke == "true":
-                            break
-                        else:
-                            for j in range(i+1, len(entry)+1):
-                                if entry[i:j].lower() == query [k:l].lower():
-                                    if entry in output:
-                                        broke = "true"
-                                        break
-                                    else:
-                                        output.append(entry)
-                                        broke = "true"
-                                        substring = "true"
-                                        break
-    return output
-    
-# def search_entry(query, check):
-#     output=[]
-#     broke= "x"
-#     letter = "x"
-#     substring ="false"
-#     for k in range(len(query)):
-#         for l in range(k+1, len(query)+1):
-#                 for entry in list_entries():
-#                     if query.lower() == entry.lower() :
-#                         if entry in output:
-#                             pass
-#                         else:
-#                             output.append(entry)
-#                         exact = "true"
-#                         break
-#                     else:
-#                         for i in range(len(entry)):
-#                             if letter == "checked":
-#                                 break
-#                             else:
-#                                 for j in range(i+1, len(entry)+1):
-#                                     if entry[i:j].lower() == query [k:l].lower():
-#                                         substring = "true"
-#                                         if entry in output:
-#                                             break
-#                                         else:
-#                                             output.append(entry)
-#                                             break
-#     if substring == "true" and check == 1:
-#         return substring
-#     else: 
-#         return output
     
 def search_entry(query, check):
     output=[]
     broke= "x"
     letter = "x"
     substring ="false"
- 
     for entry in list_entries():
         if query.lower() == entry.lower() :
             if entry in output:
                 pass
             else:
                 output.append(entry)
-            exact = "true"
             break
         else:
             for i in range(len(entry)):
-                if letter == "checked":
-                    break
-                else:
-                    for j in range(i+1, len(entry)+1):
-                        if entry[i:j].lower() == query [k:l].lower():
-                            substring = "true"
-                            if entry in output:
-                                break
-                            else:
-                                output.append(entry)
-                                break
+                for j in range(i+1, len(entry)+1):
+                    if entry[i:j].lower() == query:
+                        substring = "true"
+                        if entry in output:
+                            pass
+                        else:
+                            output.append(entry)
+                        break
     if substring == "true" and check == 1:
         return substring
     else: 
         return output
-    
 def substring_check(query):
     return search_entry(query, 1)
