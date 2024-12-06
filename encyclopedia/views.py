@@ -2,7 +2,8 @@ from django.shortcuts import render
 from encyclopedia import urls
 from . import util
 from django import forms
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 
 def index(request):
     print("went through index method")
@@ -42,11 +43,16 @@ def create(request):
 
 def add(request):
     if request.method == "POST":
-        title = request.POST['t']
+        title = request.POST['t'].lower()
         content = request.POST['c']
-        print("passed through add method")
-        store = util.search_entry(title, 0)
-        if store != title:
-            render HttpResponse("title is available")
-        else:
-            render HttpResponse("title is taken")
+        store = util.search_entry(title, 2)
+        print("passed through add method", title, content, store)
+        if store == "true":
+            util.save_entry(title, content)
+            return render(request, "encyclopedia/entry_page.html", {
+                "title": title,
+                "name": content, 
+            }) 
+        elif store == "false":
+            return HttpResponse("title is taken")
+        # return render(request, "encyclopedia/new_page.html",{})

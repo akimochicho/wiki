@@ -48,8 +48,7 @@ def title_change(title):
     
 def search_entry(query, check):
     output=[]
-    broke= "x"
-    letter = "x"
+    available = "true"
     substring ="false"
     for entry in list_entries():
         if query.lower() == entry.lower() :
@@ -57,6 +56,9 @@ def search_entry(query, check):
                 pass
             else:
                 output.append(entry)
+            if check == 2:
+                available = "false"
+                return available
             break
         else:
             for i in range(len(entry)):
@@ -70,6 +72,8 @@ def search_entry(query, check):
                         break
     if substring == "true" and check == 1:
         return substring
+    elif check == 2:
+        return available
     else: 
         return output
 def substring_check(query):
