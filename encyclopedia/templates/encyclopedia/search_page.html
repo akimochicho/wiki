@@ -1,19 +1,16 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Encyclopedia
+    {{ title }}
 {% endblock %}
 
 {% block nav %}
 {% endblock %}
 
 {% block body %}
-    <h3>Similar Pages for "{{ title }}"</h3>
-    {% if queries.length == 0 %}
-        <h3>No results to show for {{ title }}</h3>
-    {% else %}
-        {% for query in queries %}
-            <a href="wiki/{{ query }}"><h3>{{ query }}</h3></a>
-        {% endfor %}
-    {% endif %}
+    <h3>{{ title }}</h3>
+    {% for query in queries %}
+        <a href="wiki/{{ query }}"><h3>{{ query }}</h3></a>
+    {% endfor %}
+
 {% endblock %}

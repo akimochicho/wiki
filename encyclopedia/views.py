@@ -2,6 +2,7 @@ from django.shortcuts import render
 from encyclopedia import urls
 from . import util
 from django import forms
+from django.http import HttpResponse
 
 def index(request):
     print("went through index method")
@@ -24,15 +25,28 @@ def search(request):
         if len(store) > 1 or substring == "true": 
             return render(request, "encyclopedia/search_page.html", {
                 "queries": util.search_entry(query, 0),
-                "title": query
+                "title": "Similar pages containing " + "'" + query + "'",
             }) 
         elif len(store) == 0:
             return render(request, "encyclopedia/search_page.html", {
                 "queries": util.search_entry(query, 0),
-                "title": query
+                "title": "No results to show for " + "'" + query + "'"
             }) 
         else:
             return render(request, "encyclopedia/entry_page.html", {
                 "title": util.title_change(store[0]),
                 "name": util.get_entry(store[0]), 
             }) 
+def create(request):
+    return render(request, "encyclopedia/new_page.html",{})
+
+def add(request):
+    if request.method == "POST":
+        title = request.POST['t']
+        content = request.POST['c']
+        print("passed through add method")
+        store = util.search_entry(title, 0)
+        if store != title:
+            render HttpResponse("title is available")
+        else:
+            render HttpResponse("title is taken")
