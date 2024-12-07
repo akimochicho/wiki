@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from encyclopedia import urls
 from . import util
 from django import forms
@@ -14,7 +14,7 @@ def title(request, name):
     print("went through title method")
     return render(request, "encyclopedia/entry_page.html",{
         "title": util.title_change(name),
-        "name": util.get_entry(name), 
+        "content": util.get_entry(name), 
     })
 def search(request):
     # Check if method is POST
@@ -36,7 +36,7 @@ def search(request):
         else:
             return render(request, "encyclopedia/entry_page.html", {
                 "title": util.title_change(store[0]),
-                "name": util.get_entry(store[0]), 
+                "content": util.get_entry(store[0]), 
             }) 
 def create(request):
     return render(request, "encyclopedia/new_page.html",{})
@@ -51,8 +51,18 @@ def add(request):
             util.save_entry(title, content)
             return render(request, "encyclopedia/entry_page.html", {
                 "title": title,
-                "name": content, 
+                "content": content, 
             }) 
-        elif store == "false":
-            return HttpResponse("title is taken")
+        else:
+            messages.error(request, "title is taken")
+            return HttpResponse(request, "encyclopedia/entry_page.html", {})
         # return render(request, "encyclopedia/new_page.html",{})
+    
+def edit(request):
+    if request.method == "GET":
+        title = request.GET['t']
+        content = request.GET['c']
+        return render(request, "encyclopedia/edit_page.html", {
+            "title": util.title_change(c),
+            "content": util.get_entry(c),  
+        })
