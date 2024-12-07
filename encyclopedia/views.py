@@ -12,6 +12,14 @@ def index(request):
     })
 def title(request, name):
     print("went through title method")
+    if request.method == "POST":
+        title = request.POST['t']
+        content = request.POST['c']
+        util.save_entry(title, content)
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": util.title_change(title),
+            "content": util.get_entry(title),  
+        })
     return render(request, "encyclopedia/entry_page.html",{
         "title": util.title_change(name),
         "content": util.get_entry(name), 

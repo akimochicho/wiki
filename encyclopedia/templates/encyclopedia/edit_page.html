@@ -9,12 +9,12 @@
 
 {% block body %}
     <h3>Edit Page</h3>
-    <form action="wiki/{{ title }}" method="POST">
+    <form action="wiki/{{title}}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="t" value="{{ title }}" />
         <h3>{{ title }}</h3>
         <div>
-            <textarea placeholder="Enter content here">{{ content }}</textarea>
+            <textarea placeholder="Enter content here" name="c">{{ content }}</textarea>
         </div>
         <button> Save </button>
     </form>
