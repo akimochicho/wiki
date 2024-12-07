@@ -43,7 +43,7 @@ def create(request):
 
 def add(request):
     if request.method == "POST":
-        title = request.POST['t'].lower()
+        title = request.POST['t']
         content = request.POST['c']
         store = util.search_entry(title, 2)
         print("passed through add method", title, content, store)
@@ -61,8 +61,7 @@ def add(request):
 def edit(request):
     if request.method == "GET":
         title = request.GET['t']
-        content = request.GET['c']
         return render(request, "encyclopedia/edit_page.html", {
-            "title": util.title_change(c),
-            "content": util.get_entry(c),  
+            "title": util.title_change(title),
+            "content": util.get_entry(title),  
         })

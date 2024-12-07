@@ -9,11 +9,11 @@
 
 {% block body %}
     <form action="/edit" method="GET">
-        {% csrf_token %}
-        <h1 name="t">{{ title }}</h1>
-        <p name ="c">{{ content }}</p>
+        <input type="hidden" name="t" value="{{ title }}" />
+        <input type="hidden" name="c" value="{{ content }}" />
+        <h3>{{ title }}</h3>
+        <p>{{ content }}</p>
         <button>Edit Page</button>
     </form>
- 
-
+    
 {% endblock %}

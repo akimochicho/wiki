@@ -8,12 +8,13 @@
 {% endblock %}
 
 {% block body %}
-    <h3>Create a New Page</h3>
-    <form action="/add" method="POST">
+    <h3>Edit Page</h3>
+    <form action="wiki/{{ title }}" method="POST">
         {% csrf_token %}
-        <input class="title" type="text" name="t" placeholder="Title here">
+        <input type="hidden" name="t" value="{{ title }}" />
+        <h3>{{ title }}</h3>
         <div>
-            <textarea name="c" placeholder="Enter content here"></textarea>
+            <textarea placeholder="Enter content here">{{ content }}</textarea>
         </div>
         <button> Save </button>
     </form>
