@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from encyclopedia import urls
 from . import util
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib import messages
-
+import ctypes
 def index(request):
     print("went through index method")
     return render(request, "encyclopedia/index.html", {
@@ -20,10 +20,13 @@ def title(request, name):
             "title": util.title_change(title),
             "content": util.get_entry(title),  
         })
-    return render(request, "encyclopedia/entry_page.html",{
-        "title": util.title_change(name),
-        "content": util.get_entry(name), 
-    })
+    elif name not in util.list_entries():
+        return error(request)
+    else:
+        return render(request, "encyclopedia/entry_page.html",{
+            "title": util.title_change(name),
+            "content": util.get_entry(name), 
+        })
 def search(request):
     # Check if method is POST
     if request.method == "GET":
@@ -40,7 +43,7 @@ def search(request):
             return render(request, "encyclopedia/search_page.html", {
                 "queries": util.search_entry(query, 0),
                 "title": "No results to show for " + "'" + query + "'"
-            }) 
+            })
         else:
             return render(request, "encyclopedia/entry_page.html", {
                 "title": util.title_change(store[0]),
@@ -48,12 +51,12 @@ def search(request):
             }) 
 def create(request):
     return render(request, "encyclopedia/new_page.html",{})
-
 def add(request):
     if request.method == "POST":
         title = request.POST['t']
         content = request.POST['c']
         store = util.search_entry(title, 2)
+        content = "<h1>" + title + "</h1>" + content
         print("passed through add method", title, content, store)
         if store == "true":
             util.save_entry(title, content)
@@ -62,10 +65,12 @@ def add(request):
                 "content": content, 
             }) 
         else:
-            messages.error(request, "title is taken")
-            return HttpResponse(request, "encyclopedia/entry_page.html", {})
+            return render(request, "encyclopedia/new_page.html",{
+                "error": "'" + title + "'" +" is taken",
+            })
+            # prompt()
+            # return HttpResponse(request, "encyclopedia/entry_page.html", {})
         # return render(request, "encyclopedia/new_page.html",{})
-    
 def edit(request):
     if request.method == "GET":
         title = request.GET['t']
@@ -73,3 +78,12 @@ def edit(request):
             "title": util.title_change(title),
             "content": util.get_entry(title),  
         })
+def random(request):
+    import random
+    entry = random.choice(util.list_entries())
+    return render(request, "encyclopedia/entry_page.html",{
+        "title": util.title_change(entry),
+        "content": util.get_entry(entry), 
+    })
+def error(request):
+     return render(request, "encyclopedia/error_page.html",{})

@@ -11,7 +11,7 @@
     <body>
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
-                <a href=><h2 >Wiki</h2></a>
+                <h2 >Wiki</h2>
                 <form action="/search" method="GET">
                     {% csrf_token %}
                     <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
@@ -19,11 +19,9 @@
                 <div>
                     <a href="{% url 'main:index' %}">Home</a>
                 </div>
-                <a href="{% url 'main:create' %}"><div>
-                    Create New Page
-                </div></a>
+                    <a href="{% url 'main:create' %}"> Create New Page</a>
                 <div>
-                    <a href="{% url 'main:index' %}">Random Page</a>
+                    <a href="{% url 'main:random' %}">Random Page</a>
                 </div>
                 {% block nav %}
                 {% endblock %}

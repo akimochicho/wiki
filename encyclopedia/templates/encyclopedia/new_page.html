@@ -9,9 +9,10 @@
 
 {% block body %}
     <h3>Create a New Page</h3>
-    <form action="/add" method="POST">
+    <form action="{% url 'main:add' %}" method="POST">
         {% csrf_token %}
         <input class="title" type="text" name="t" placeholder="Title here">
+        <span class="error">{{ error }}</span>
         <div>
             <textarea name="c" placeholder="Enter content here"></textarea>
         </div>

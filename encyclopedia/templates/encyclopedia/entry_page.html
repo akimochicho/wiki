@@ -11,8 +11,9 @@
     <form action="/edit" method="GET">
         <input type="hidden" name="t" value="{{ title }}" />
         <input type="hidden" name="c" value="{{ content }}" />
-        <h3>{{ title }}</h3>
-        <p>{{ content }}</p>
+        <div> 
+            {{ content|safe }}
+        </div>
         <button>Edit Page</button>
     </form>
     

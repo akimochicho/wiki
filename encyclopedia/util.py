@@ -1,9 +1,8 @@
 import re
 from . import views
-
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-
+from markdown import Markdown
 
 def list_entries():
     """
@@ -31,11 +30,14 @@ def get_entry(title):
     Retrieves an encyclopedia entry by its title. If no such
     entry exists, the function returns None.
     """
+    import markdown
     try:
         for entry in list_entries():
             if entry.lower() == title.lower():
                 f = default_storage.open(f"entries/{entry}.md")
-                return f.read().decode("utf-8")
+                f = f.read().decode("utf-8")
+                md = markdown.Markdown(extensions=["fenced_code"])
+                return md.convert(f)
     except FileNotFoundError:
         return None
 
@@ -76,5 +78,7 @@ def search_entry(query, check):
         return available
     else: 
         return output
+
+
 def substring_check(query):
     return search_entry(query, 1)
