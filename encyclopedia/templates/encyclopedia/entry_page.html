@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-    <form action="/edit" method="GET">
+    <form action="{% url 'main:edit' %}" method="GET">
         <input type="hidden" name="t" value="{{ title }}" />
         <input type="hidden" name="c" value="{{ content }}" />
         <div> 

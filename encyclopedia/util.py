@@ -2,7 +2,7 @@ import re
 from . import views
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from markdown import Markdown
+
 
 def list_entries():
     """
@@ -19,10 +19,12 @@ def save_entry(title, content):
     content. If an existing entry with the same title already exists,
     it is replaced.
     """
+    import markdown
     filename = f"entries/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
     default_storage.save(filename, ContentFile(content))
+
 
 
 def get_entry(title):
@@ -46,13 +48,14 @@ def title_change(title):
     for entry in list_entries():
         if entry.lower() == title.lower():
             return entry
+    return "None"
 
     
 def search_entry(query, check):
     output=[]
     available = "true"
     substring ="false"
-    for entry in list_entries():
+    for entry in list_entries(): #duration num of entries
         if query.lower() == entry.lower() :
             if entry in output:
                 pass
@@ -63,8 +66,8 @@ def search_entry(query, check):
                 return available
             break
         else:
-            for i in range(len(entry)):
-                for j in range(i+1, len(entry)+1):
+            for i in range(len(entry)): #length of entry
+                for j in range(i+1, len(entry)+1): #substring check
                     if entry[i:j].lower() == query:
                         substring = "true"
                         if entry in output:
@@ -72,11 +75,11 @@ def search_entry(query, check):
                         else:
                             output.append(entry)
                         break
-    if substring == "true" and check == 1:
+    if substring == "true" and check == 1: #pages containing substring
         return substring
-    elif check == 2:
+    elif check == 2: #if title is available = true 
         return available
-    else: 
+    else: #either empty or exact entry
         return output
 
 
