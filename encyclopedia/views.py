@@ -40,7 +40,7 @@ def search(request):
         if len(store) > 1 or substring == "true":  #contains substring 
             return render(request, "encyclopedia/search_page.html", {
                 "queries": util.search_entry(query, 0),
-                "title": "Similar pages containing " + "'" + query + "'",
+                "title": "Pages containing " + "'" + query + "'",
             }) 
         elif len(store) == 0: #no results
             return render(request, "encyclopedia/search_page.html", {
